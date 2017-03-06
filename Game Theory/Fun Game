@@ -1,0 +1,76 @@
+/*
+****************************************************************
+****************************************************************
+-> Coded by Stavros Chryselis				   
+-> Visit my github for more solved problems over multiple sites 
+-> https://github.com/StavrosChryselis			  
+-> Feel free to email me at stavrikios@gmail.com	
+****************************************************************
+****************************************************************
+*/
+
+#include <stdio.h>
+#include <algorithm>
+#include <functional>
+
+using namespace std;
+
+int A[1024];
+pair<int, int> SUM[1024]; //s, ai
+int N;
+
+inline void init()
+{
+	int i, num;
+
+	scanf("%d", &N);
+
+	for (i = 0; i < N; i++)
+		scanf("%d", &A[i]);
+
+	for (i = 0; i < N; i++)
+	{
+		scanf("%d", &num);
+		SUM[i].first = A[i] + num;
+		SUM[i].second = A[i];
+	}
+
+	sort(SUM, SUM + N, greater< pair<int, int> >());
+}
+
+inline void solve()
+{
+	int sA, sB, i;
+
+	sA = sB = 0;
+
+	for (i = 0; i < N; i++)
+	{
+		if (i % 2 == 0)
+			sA += SUM[i].second;
+		else
+			sB += SUM[i].first - SUM[i].second;
+	}
+
+	if (sA > sB)
+		printf("First\n");
+	else if (sA < sB)
+		printf("Second\n");
+	else
+		printf("Tie\n");
+}
+
+int main()
+{
+	int T;
+
+	scanf("%d", &T);
+
+	while (T--)
+	{
+		init();
+		solve();
+	}
+
+	return 0;
+}
